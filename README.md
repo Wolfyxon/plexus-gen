@@ -2,6 +2,11 @@
 ## Simple tool for generating 2D plexus structures made in Godot Engine
 ### This project is still under construction!
 
+<p float="left">
+<img src="https://raw.githubusercontent.com/Wolfyxon/plexus-gen/main/github/img/screenshot1.png" width="300px"> <img src="https://raw.githubusercontent.com/Wolfyxon/plexus-gen/main/github/img/screenshot2.png" width="300px"> <img src="https://raw.githubusercontent.com/Wolfyxon/plexus-gen/main/github/img/screenshot3.png" width="300px">
+</p>
+
+
 **Features:**
 - [x] configurable colors, sizes, visibilities and speeds
 - [x] hideable GUI
