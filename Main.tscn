@@ -194,7 +194,7 @@ margin_left = 513.0
 margin_top = 9.0
 margin_right = 855.0
 margin_bottom = 23.0
-text = "F1 - hide GUI and full canvas |  F11 - fullscreen mode"
+text = "F1 - hide GUI and fill canvas |  F11 - fullscreen mode"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -680,19 +680,23 @@ __meta__ = {
 margin_top = 4.0
 margin_right = 467.0
 margin_bottom = 361.0
+focus_mode = 2
 bbcode_enabled = true
-bbcode_text = "[color=blue]Plexus gen[/color]
+bbcode_text = "[color=blue]Plexus gen[/color] v1.0
 by Wolfyxon
+[color=red][url]https://wolfyxon.github.io[/url][/color]
 
 Used stuff:
 -Godot Engine [url]https://github.com/godotengine/godot[/url]
 -PlexusBackground [url]https://github.com/SpyrexDE/PlexusBackground[/url]"
-text = "Plexus gen
+text = "Plexus gen v1.0
 by Wolfyxon
+https://wolfyxon.github.io
 
 Used stuff:
 -Godot Engine https://github.com/godotengine/godot
 -PlexusBackground https://github.com/SpyrexDE/PlexusBackground"
+selection_enabled = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
