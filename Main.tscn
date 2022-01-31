@@ -200,6 +200,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 maxDots = 100
+squared = true
 
 [node name="update" type="Timer" parent="canvas/background/Plexus"]
 process_mode = 0
@@ -261,7 +262,7 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/menus/left/properties/ScrollContainer"]
 margin_right = 200.0
-margin_bottom = 689.0
+margin_bottom = 738.0
 rect_min_size = Vector2( 200, 0 )
 custom_constants/separation = 9
 alignment = 1
@@ -591,41 +592,47 @@ margin_bottom = 446.0
 pressed = true
 text = "Draw lines"
 
-[node name="btn_plexus_color" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+[node name="right_angles" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 margin_top = 455.0
 margin_right = 200.0
-margin_bottom = 475.0
+margin_bottom = 495.0
+text = "right angles"
+
+[node name="btn_plexus_color" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 504.0
+margin_right = 200.0
+margin_bottom = 524.0
 text = "Select line color"
 
 [node name="btn_circle_color" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 484.0
+margin_top = 533.0
 margin_right = 200.0
-margin_bottom = 504.0
+margin_bottom = 553.0
 text = "Select circle color"
 
 [node name="btn_modulate" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 513.0
+margin_top = 562.0
 margin_right = 200.0
-margin_bottom = 533.0
+margin_bottom = 582.0
 text = "Select global color"
 
 [node name="btn_bgcolor" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 542.0
+margin_top = 591.0
 margin_right = 200.0
-margin_bottom = 562.0
+margin_bottom = 611.0
 text = "Select background color"
 
 [node name="btn_clear" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 self_modulate = Color( 1, 0, 0, 1 )
-margin_top = 571.0
+margin_top = 620.0
 margin_right = 200.0
-margin_bottom = 591.0
+margin_bottom = 640.0
 text = "Clear"
 
 [node name="flip_x" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 600.0
+margin_top = 649.0
 margin_right = 200.0
-margin_bottom = 640.0
+margin_bottom = 689.0
 text = "flip horizontal"
 
 [node name="Label" type="Label" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/flip_x"]
@@ -639,9 +646,9 @@ __meta__ = {
 }
 
 [node name="flip_y" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 649.0
+margin_top = 698.0
 margin_right = 200.0
-margin_bottom = 689.0
+margin_bottom = 738.0
 disabled = true
 text = "flip vertical"
 
@@ -790,10 +797,10 @@ z_index = 5
 
 [node name="plexus_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 362.0
-margin_top = 82.0
-margin_right = 670.0
-margin_bottom = 544.0
+margin_left = 366.0
+margin_top = 86.0
+margin_right = 674.0
+margin_bottom = 548.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -807,10 +814,10 @@ texture = ExtResource( 4 )
 
 [node name="circle_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 362.0
-margin_top = 82.0
-margin_right = 670.0
-margin_bottom = 544.0
+margin_left = 366.0
+margin_top = 86.0
+margin_right = 674.0
+margin_bottom = 548.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -824,10 +831,10 @@ texture = ExtResource( 4 )
 
 [node name="modulate" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 366.0
-margin_top = 86.0
-margin_right = 674.0
-margin_bottom = 548.0
+margin_left = 370.0
+margin_top = 90.0
+margin_right = 678.0
+margin_bottom = 552.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -841,10 +848,10 @@ texture = ExtResource( 4 )
 
 [node name="bgcolor" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 370.0
-margin_top = 90.0
-margin_right = 678.0
-margin_bottom = 552.0
+margin_left = 374.0
+margin_top = 94.0
+margin_right = 682.0
+margin_bottom = 556.0
 color = Color( 0, 0, 0, 1 )
 edit_alpha = false
 __meta__ = {

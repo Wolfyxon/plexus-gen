@@ -11,6 +11,7 @@ var velocities = []
 # ====
 export var enable_circles = false
 export var enable_lines = true
+export var squared = false
 
 export var line_width = 1.0
 
@@ -18,6 +19,7 @@ export var line_color = Color(1,1,1,1)
 export var circle_color = Color(1,1,1,1)
 
 export var canUpdate = true
+
 # ====
 func _ready():
 	for i in maxDots:
@@ -25,7 +27,6 @@ func _ready():
 
 func _process(delta):
 	pass
-
 
 func spawnNew(pos = null):
 	if pos == null:
@@ -45,11 +46,21 @@ func _draw():
 		for otherDot in positions:
 			if dot.distance_to(otherDot) < 300.0:
 				#var alpha = clamp(dot.distance_to(otherDot)/120, 0, 2)
-				if enable_lines == true: 
-					draw_line(dot, otherDot,line_color, line_width, true) #draw_line(dot, otherDot, Color(1,1,1, alpha), 1.0, true)
+				if enable_lines: 
+					var tmp_otherDot = null
+					if squared:
+						if rand_range(-1,1) > 0:
+							tmp_otherDot = Vector2(dot.x + rand_range(-200,200),dot.y)
+						else:
+							tmp_otherDot = Vector2(dot.x,dot.y + rand_range(-200,200))
+						pass
+					else: tmp_otherDot = otherDot
+					draw_line(dot,tmp_otherDot,line_color, line_width, true) #draw_line(dot, otherDot, Color(1,1,1, alpha), 1.0, true)
+
 
 func newRandPos():
 	#Top
+	
 	var x1 = rand_range(-200, self.rect_size.x + 200)
 	var y1 = rand_range(-200, -100)
 	#Bottom

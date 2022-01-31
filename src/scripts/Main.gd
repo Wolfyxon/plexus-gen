@@ -46,6 +46,7 @@ func _physics_process(delta):
 		$canvas/background/Plexus.enable_lines = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/lines_enabled.pressed
 		$canvas/background/Plexus.canUpdate = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/update_enabled.pressed
 		get_tree().paused = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/pause_render.pressed
+		$canvas/background/Plexus.squared = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/right_angles.pressed
 		
 		$canvas/background/Plexus.line_color = $GUI/popups/plexus_color.color
 		$canvas/background/Plexus.circle_color = $GUI/popups/circle_color.color
