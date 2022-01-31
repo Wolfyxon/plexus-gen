@@ -790,10 +790,10 @@ z_index = 5
 
 [node name="plexus_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 358.0
-margin_top = 78.0
-margin_right = 666.0
-margin_bottom = 540.0
+margin_left = 362.0
+margin_top = 82.0
+margin_right = 670.0
+margin_bottom = 544.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -807,10 +807,10 @@ texture = ExtResource( 4 )
 
 [node name="circle_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 358.0
-margin_top = 78.0
-margin_right = 666.0
-margin_bottom = 540.0
+margin_left = 362.0
+margin_top = 82.0
+margin_right = 670.0
+margin_bottom = 544.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -824,10 +824,10 @@ texture = ExtResource( 4 )
 
 [node name="modulate" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 362.0
-margin_top = 82.0
-margin_right = 670.0
-margin_bottom = 544.0
+margin_left = 366.0
+margin_top = 86.0
+margin_right = 674.0
+margin_bottom = 548.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -841,10 +841,10 @@ texture = ExtResource( 4 )
 
 [node name="bgcolor" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 366.0
-margin_top = 86.0
-margin_right = 674.0
-margin_bottom = 548.0
+margin_left = 370.0
+margin_top = 90.0
+margin_right = 678.0
+margin_bottom = 552.0
 color = Color( 0, 0, 0, 1 )
 edit_alpha = false
 __meta__ = {

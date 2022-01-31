@@ -146,7 +146,7 @@ func _on_btn_save_img_pressed():
 	var path = OS.get_user_data_dir()+"/export/images/"+String(OS.get_unix_time()) +".png"
 	img.save_png(path)
 	
-	$canvas/bottom_status.set_text("Saved: [url]"+path+"[/url]")
+	$GUI/txt/bottom_status.set_text("Saved: [url]"+path+"[/url]")
 	if $GUI/menus/right/controls/ScrollContainer/VBoxContainer/open_after_render.pressed: OS.shell_open(path)
 	OS.move_window_to_foreground()
 	
