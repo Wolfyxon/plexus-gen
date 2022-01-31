@@ -12,7 +12,8 @@ Latest release may not include latest features, I recommend you to run game from
 - [x] hideable GUI
 - [x] resizable canvas 
 - [x] simple GUI and settings
-- [ ] recording (Comming soon)
+- [x] capturing images 
+- [ ] recording movies and GIFs (Comming soon)
 
 Available settings:
 - max points [float]
