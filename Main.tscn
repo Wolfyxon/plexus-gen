@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/scripts/Plexus.gd" type="Script" id=1]
 [ext_resource path="res://src/scripts/Main.gd" type="Script" id=2]
@@ -13,16 +13,143 @@ border_width_right = 1
 border_width_bottom = 1
 shadow_size = 3
 
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("GUI:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("canvas/Label:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("canvas/fps:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("canvas/background:rect_size")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 605, 556 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("canvas/background:rect_position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 261, 26 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "full_canvas"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("GUI:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("canvas/Label:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("canvas/fps:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("canvas/background:rect_size")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1027, 602 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("canvas/background:rect_position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -3, -2 ) ]
+}
+
 [node name="Main" type="Node"]
 script = ExtResource( 2 )
 
 [node name="canvas" type="Node2D" parent="."]
 
 [node name="background" type="ColorRect" parent="canvas"]
-margin_left = 269.0
-margin_top = 36.0
-margin_right = 844.0
-margin_bottom = 561.0
+margin_left = 261.0
+margin_top = 26.0
+margin_right = 866.0
+margin_bottom = 582.0
 rect_clip_content = true
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
@@ -30,20 +157,17 @@ __meta__ = {
 }
 
 [node name="Plexus" type="Control" parent="canvas/background"]
+visible = false
 margin_left = 3.0
 margin_top = -6.0
 margin_right = 572.0
 margin_bottom = 521.0
 script = ExtResource( 1 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 maxDots = 100
-
-[node name="sub" type="Control" parent="canvas/background/Plexus"]
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="update" type="Timer" parent="canvas/background/Plexus"]
 process_mode = 0
@@ -64,6 +188,26 @@ autostart = true
 wait_time = 0.01
 autostart = true
 
+[node name="Label" type="Label" parent="canvas"]
+margin_left = 523.0
+margin_top = 9.0
+margin_right = 865.0
+margin_bottom = 23.0
+text = "F1 - hide GUI and full canvas |  F11 - fullscreen mode"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="fps" type="Label" parent="canvas"]
+margin_left = 264.0
+margin_top = 9.0
+margin_right = 391.0
+margin_bottom = 23.0
+text = "0 FPS"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="GUI" type="Node2D" parent="."]
 z_index = 1
 
@@ -74,6 +218,7 @@ margin_right = 1021.0
 margin_bottom = 594.0
 custom_constants/separation = 666
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -103,19 +248,19 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/menus/left/properties/ScrollContainer"]
-margin_right = 158.0
-margin_bottom = 394.0
+margin_right = 164.0
+margin_bottom = 423.0
 rect_min_size = Vector2( 140, 0 )
 custom_constants/separation = 9
 
 [node name="Control" type="Control" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_right = 158.0
+margin_right = 164.0
 margin_bottom = 10.0
 rect_min_size = Vector2( 0, 10 )
 
 [node name="max_points" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 margin_top = 19.0
-margin_right = 158.0
+margin_right = 164.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 110, 0 )
 max_value = 500.0
@@ -144,7 +289,7 @@ __meta__ = {
 
 [node name="update_itrv" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 margin_top = 44.0
-margin_right = 158.0
+margin_right = 164.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 120, 0 )
 min_value = 0.01
@@ -176,7 +321,7 @@ __meta__ = {
 
 [node name="spawn_itrv" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 margin_top = 69.0
-margin_right = 158.0
+margin_right = 164.0
 margin_bottom = 85.0
 rect_min_size = Vector2( 120, 0 )
 min_value = 0.01
@@ -208,7 +353,7 @@ __meta__ = {
 
 [node name="despawn_itrv" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 margin_top = 94.0
-margin_right = 158.0
+margin_right = 164.0
 margin_bottom = 110.0
 rect_min_size = Vector2( 120, 0 )
 min_value = 0.01
@@ -239,7 +384,7 @@ __meta__ = {
 
 [node name="move_itrv" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 margin_top = 119.0
-margin_right = 158.0
+margin_right = 164.0
 margin_bottom = 135.0
 rect_min_size = Vector2( 120, 0 )
 min_value = 0.01
@@ -270,7 +415,7 @@ __meta__ = {
 
 [node name="line_width" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 margin_top = 144.0
-margin_right = 158.0
+margin_right = 164.0
 margin_bottom = 160.0
 rect_min_size = Vector2( 120, 0 )
 min_value = 0.01
@@ -333,41 +478,47 @@ __meta__ = {
 
 [node name="update_enabled" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 margin_top = 169.0
-margin_right = 158.0
+margin_right = 164.0
 margin_bottom = 209.0
 pressed = true
 text = "Update"
 
 [node name="circles_enabled" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 margin_top = 218.0
-margin_right = 158.0
+margin_right = 164.0
 margin_bottom = 258.0
 text = "Draw circles"
 
 [node name="lines_enabled" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 margin_top = 267.0
-margin_right = 158.0
+margin_right = 164.0
 margin_bottom = 307.0
 pressed = true
 text = "Draw lines"
 
 [node name="btn_plexus_color" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 margin_top = 316.0
-margin_right = 158.0
+margin_right = 164.0
 margin_bottom = 336.0
 text = "Select line color"
 
 [node name="btn_circle_color" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 margin_top = 345.0
-margin_right = 158.0
+margin_right = 164.0
 margin_bottom = 365.0
 text = "Select circle color"
 
 [node name="btn_modulate" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 margin_top = 374.0
-margin_right = 158.0
+margin_right = 164.0
 margin_bottom = 394.0
 text = "Select global color"
+
+[node name="btn_bgcolor" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 403.0
+margin_right = 164.0
+margin_bottom = 423.0
+text = "Select background color"
 
 [node name="right" type="VBoxContainer" parent="GUI/menus"]
 margin_left = 916.0
@@ -377,7 +528,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="preview_controls" type="Panel" parent="GUI/menus/right"]
+[node name="controls" type="Panel" parent="GUI/menus/right"]
 margin_right = 150.0
 margin_bottom = 590.0
 rect_min_size = Vector2( 150, 590 )
@@ -386,14 +537,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ScrollContainer" type="ScrollContainer" parent="GUI/menus/right/preview_controls"]
-margin_right = 197.0
+[node name="ScrollContainer" type="ScrollContainer" parent="GUI/menus/right/controls"]
+margin_right = 147.0
 margin_bottom = 584.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/menus/right/preview_controls/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/menus/right/controls/ScrollContainer"]
 
 [node name="popups" type="Node2D" parent="GUI"]
 
@@ -448,6 +599,29 @@ scale = Vector2( 5.73438, 8.01563 )
 z_index = -1
 texture = ExtResource( 4 )
 
+[node name="bgcolor" type="ColorPicker" parent="GUI/popups"]
+visible = false
+margin_left = 358.0
+margin_top = 78.0
+margin_right = 666.0
+margin_bottom = 540.0
+color = Color( 0, 0, 0, 1 )
+edit_alpha = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite2" type="Sprite" parent="GUI/popups/bgcolor"]
+self_modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 151.5, 224.5 )
+scale = Vector2( 5.73438, 8.01563 )
+z_index = -1
+texture = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 3 )
+anims/full_canvas = SubResource( 2 )
+
 [connection signal="timeout" from="canvas/background/Plexus/update" to="canvas/background/Plexus" method="_on_update_timeout"]
 [connection signal="timeout" from="canvas/background/Plexus/spawn_new" to="canvas/background/Plexus" method="_on_spawn_new_timeout"]
 [connection signal="timeout" from="canvas/background/Plexus/destroy" to="canvas/background/Plexus" method="_on_destroy_timeout"]
@@ -469,3 +643,4 @@ texture = ExtResource( 4 )
 [connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_plexus_color" to="." method="_on_btn_plexus_color_pressed"]
 [connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_circle_color" to="." method="_on_btn_circle_color_pressed"]
 [connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_modulate" to="." method="_on_btn_modulate_pressed"]
+[connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_bgcolor" to="." method="_on_btn_bgcolor_pressed"]
