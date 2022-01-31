@@ -88,8 +88,6 @@ func _on_spawn_new_timeout():
 		spawnNew()
 
 
-
-
 func _on_destroy_timeout():
 	for dot in positions:
 		if dot.x < -200 || dot.y < -200 || dot.x > self.rect_size.x + 200 || dot.y > self.rect_size.y + 200:
@@ -98,8 +96,16 @@ func _on_destroy_timeout():
 			sizes.remove(dotID)
 			velocities.remove(dotID)
 	
-
-
+func clearAll():
+		for dot in positions:
+			var dotID = positions.find(dot)
+			positions.remove(dotID)
+			sizes.remove(dotID)
+			velocities.remove(dotID)
+		positions = []
+		sizes = []
+		velocities = []
+			
 func _on_move_timeout():
 	for dot in positions:
 		positions[positions.find(dot)] += velocities[positions.find(dot)]

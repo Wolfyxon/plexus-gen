@@ -2,9 +2,14 @@ extends Node
 
 #go away from my spaghetti code >:c
 
+var is_rendering = false
+
+var ready = false
+
 func _ready():
 	$canvas/background/Plexus.visible = true
 	$AnimationPlayer.play("RESET")
+	ready = true
 	
 	var dir = Directory.new()
 	
@@ -25,17 +30,22 @@ func _ready():
 var sync_settings = true
 
 func _physics_process(delta):
-	if sync_settings:
-		
+	if sync_settings and ready:
 		$canvas/background/Plexus.maxDots = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/max_points.value
 		$canvas/background/Plexus/update.wait_time = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/update_itrv.value
 		$canvas/background/Plexus/spawn_new.wait_time = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/spawn_itrv.value
 		$canvas/background/Plexus/destroy.wait_time = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/despawn_itrv.value
 		$canvas/background/Plexus.line_width = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_width.value
+		$canvas/background/Plexus.rect_scale = Vector2(
+			$GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_x.value,
+			$GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_y.value
+		)
+
 		
 		$canvas/background/Plexus.enable_circles = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/circles_enabled.pressed
 		$canvas/background/Plexus.enable_lines = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/lines_enabled.pressed
 		$canvas/background/Plexus.canUpdate = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/update_enabled.pressed
+		get_tree().paused = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/pause_render.pressed
 		
 		$canvas/background/Plexus.line_color = $GUI/popups/plexus_color.color
 		$canvas/background/Plexus.circle_color = $GUI/popups/circle_color.color
@@ -57,14 +67,19 @@ func _physics_process(delta):
 				canExit = false
 				node.visible = false
 				
-		if($GUI/popups/popup_about.visible):
+		if $GUI/popups/popup_about.visible:
 			$GUI/popups/popup_about.visible = false
+			canExit = false
+		if not $GUI.visible:
+			if is_rendering: return
+			$GUI.visible = true
 			canExit = false
 			
 			
 		if canExit: get_tree().quit()
 	
 	if Input.is_action_just_pressed("hide_gui"):
+		if is_rendering: return
 		#Don't ask why animation
 		if $GUI.visible:
 			$AnimationPlayer.play("full_canvas")
@@ -72,7 +87,7 @@ func _physics_process(delta):
 			$AnimationPlayer.play("RESET")
 	
 	#looped stuff
-	$canvas/fps.text = String(Engine.get_frames_per_second())+" FPS"
+	$GUI/txt/fps.text = String(Engine.get_frames_per_second())+" FPS"
 
 
 
@@ -112,6 +127,8 @@ func _on_RichTextLabel_meta_clicked(meta):
 
 
 func _on_btn_save_img_pressed():
+	is_rendering = true
+	print("Rendering single image...")
 	$AnimationPlayer.play("full_canvas")
 	yield(get_tree().create_timer(0.5),"timeout")
 	
@@ -134,9 +151,19 @@ func _on_btn_save_img_pressed():
 	OS.move_window_to_foreground()
 	
 	$AnimationPlayer.play("RESET")
+	is_rendering = false
 	pass
 
 
 func _on_btn_openpath_pressed():
 	OS.shell_open(OS.get_user_data_dir()+"\\export")
 	pass
+
+
+func _on_btn_clear_pressed():
+	$canvas/background/Plexus.clearAll()
+	pass # Replace with function body.
+
+
+func _on_btn_reset_pressed():
+	get_tree().change_scene("res://Main.tscn")
