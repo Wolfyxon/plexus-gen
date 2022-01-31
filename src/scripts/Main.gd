@@ -5,29 +5,65 @@ extends Node
 func _ready():
 	$canvas/background/Plexus.visible = true
 	$AnimationPlayer.play("RESET")
+	
+	var dir = Directory.new()
+	
+	dir.open("user://")
+	if not dir.dir_exists("export"):
+		dir.make_dir("export")
+		
+	if not dir.dir_exists("export/images"):
+		dir.make_dir("export/images")
+		
+	if not dir.dir_exists("export/videos"):
+		dir.make_dir("export/videos")
+		
+	if not dir.dir_exists("export/gifs"):
+		dir.make_dir("export/gifs")
+	
+
+var sync_settings = true
 
 func _physics_process(delta):
-	$canvas/background/Plexus.rect_size = $canvas/background.rect_size
-	
-	$canvas/background/Plexus.maxDots = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/max_points.value
-	$canvas/background/Plexus/update.wait_time = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/update_itrv.value
-	$canvas/background/Plexus/spawn_new.wait_time = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/spawn_itrv.value
-	$canvas/background/Plexus/destroy.wait_time = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/despawn_itrv.value
-	
-	$canvas/background/Plexus.enable_circles = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/circles_enabled.pressed
-	$canvas/background/Plexus.enable_lines = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/lines_enabled.pressed
-	$canvas/background/Plexus.canUpdate = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/update_enabled.pressed
-	
-	$canvas/background/Plexus.line_color = $GUI/popups/plexus_color.color
-	$canvas/background/Plexus.circle_color = $GUI/popups/circle_color.color
-	$canvas/background/Plexus.modulate = $GUI/popups/modulate.color
-	$canvas/background.color = $GUI/popups/bgcolor.color
-	
-	$canvas/background/Plexus.line_width = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_width.value
-	
+	if sync_settings:
+		
+		$canvas/background/Plexus.maxDots = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/max_points.value
+		$canvas/background/Plexus/update.wait_time = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/update_itrv.value
+		$canvas/background/Plexus/spawn_new.wait_time = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/spawn_itrv.value
+		$canvas/background/Plexus/destroy.wait_time = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/despawn_itrv.value
+		$canvas/background/Plexus.line_width = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_width.value
+		
+		$canvas/background/Plexus.enable_circles = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/circles_enabled.pressed
+		$canvas/background/Plexus.enable_lines = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/lines_enabled.pressed
+		$canvas/background/Plexus.canUpdate = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/update_enabled.pressed
+		
+		$canvas/background/Plexus.line_color = $GUI/popups/plexus_color.color
+		$canvas/background/Plexus.circle_color = $GUI/popups/circle_color.color
+		$canvas/background/Plexus.modulate = $GUI/popups/modulate.color
+		$canvas/background.color = $GUI/popups/bgcolor.color
+		
+		
+		
+		
+		
+		
 	#Inputs
 	if Input.is_action_just_pressed("fullscreen"):
 		OS.window_fullscreen = not(OS.window_fullscreen)
+	if Input.is_action_just_pressed("exit"):
+		var canExit = true
+		for node in $GUI/popups.get_children(): 
+			if node.visible: 
+				canExit = false
+				node.visible = false
+				
+		if($GUI/popups/popup_about.visible):
+			$GUI/popups/popup_about.visible = false
+			canExit = false
+			
+			
+		if canExit: get_tree().quit()
+	
 	if Input.is_action_just_pressed("hide_gui"):
 		#Don't ask why animation
 		if $GUI.visible:
@@ -35,8 +71,9 @@ func _physics_process(delta):
 		else:
 			$AnimationPlayer.play("RESET")
 	
-	#text
+	#looped stuff
 	$canvas/fps.text = String(Engine.get_frames_per_second())+" FPS"
+
 
 
 func _on_btn_plexus_color_pressed():
@@ -72,3 +109,34 @@ func _on_btn_about_pressed():
 
 func _on_RichTextLabel_meta_clicked(meta):
 	OS.shell_open(meta)
+
+
+func _on_btn_save_img_pressed():
+	$AnimationPlayer.play("full_canvas")
+	yield(get_tree().create_timer(0.5),"timeout")
+	
+	var img = get_viewport().get_texture().get_data()
+	yield(get_tree(), "idle_frame")
+	yield(get_tree(), "idle_frame")
+	var texture = ImageTexture.new()
+	texture.create_from_image(img)
+	$GUI/menus/right/controls/ScrollContainer/VBoxContainer/render_preview.texture = texture
+	
+	if not $GUI/menus/left/properties/ScrollContainer/VBoxContainer/flip_x.pressed: img.flip_x() #image is default flipped
+	#if $GUI/menus/left/properties/ScrollContainer/VBoxContainer/flip_y.pressed: img.flip_y() #doesn't work for some reason
+	
+	yield(get_tree().create_timer(1),"timeout")
+	var path = OS.get_user_data_dir()+"/export/images/"+String(OS.get_unix_time()) +".png"
+	img.save_png(path)
+	
+	$canvas/bottom_status.set_text("Saved: [url]"+path+"[/url]")
+	if $GUI/menus/right/controls/ScrollContainer/VBoxContainer/open_after_render.pressed: OS.shell_open(path)
+	OS.move_window_to_foreground()
+	
+	$AnimationPlayer.play("RESET")
+	pass
+
+
+func _on_btn_openpath_pressed():
+	OS.shell_open(OS.get_user_data_dir()+"\\export")
+	pass
