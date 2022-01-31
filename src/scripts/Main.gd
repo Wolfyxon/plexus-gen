@@ -65,4 +65,10 @@ func _on_btn_bgcolor_pressed():
 	$GUI/popups/plexus_color.visible = false
 	$GUI/popups/circle_color.visible = false
 	$GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_modulate.visible = false
-	pass # Replace with function body.
+
+
+func _on_btn_about_pressed():
+	$GUI/popups/popup_about.popup()
+
+func _on_RichTextLabel_meta_clicked(meta):
+	OS.shell_open(meta)

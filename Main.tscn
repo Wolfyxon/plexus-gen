@@ -61,7 +61,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 605, 556 ) ]
+"values": [ Vector2( 610, 556 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("canvas/background:rect_position")
@@ -73,7 +73,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 261, 26 ) ]
+"values": [ Vector2( 255, 26 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -146,13 +146,14 @@ script = ExtResource( 2 )
 [node name="canvas" type="Node2D" parent="."]
 
 [node name="background" type="ColorRect" parent="canvas"]
-margin_left = 261.0
+margin_left = 255.0
 margin_top = 26.0
-margin_right = 866.0
+margin_right = 865.0
 margin_bottom = 582.0
 rect_clip_content = true
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -189,9 +190,9 @@ wait_time = 0.01
 autostart = true
 
 [node name="Label" type="Label" parent="canvas"]
-margin_left = 523.0
+margin_left = 513.0
 margin_top = 9.0
-margin_right = 865.0
+margin_right = 855.0
 margin_bottom = 23.0
 text = "F1 - hide GUI and full canvas |  F11 - fullscreen mode"
 __meta__ = {
@@ -216,7 +217,7 @@ margin_left = 2.0
 margin_top = 4.0
 margin_right = 1021.0
 margin_bottom = 594.0
-custom_constants/separation = 666
+custom_constants/separation = 617
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -521,25 +522,70 @@ margin_bottom = 423.0
 text = "Select background color"
 
 [node name="right" type="VBoxContainer" parent="GUI/menus"]
-margin_left = 916.0
-margin_right = 1066.0
+margin_left = 867.0
+margin_right = 1017.0
 margin_bottom = 590.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="controls" type="Panel" parent="GUI/menus/right"]
+[node name="settings_stuff" type="Panel" parent="GUI/menus/right"]
 margin_right = 150.0
-margin_bottom = 590.0
-rect_min_size = Vector2( 150, 590 )
+margin_bottom = 100.0
+rect_min_size = Vector2( 150, 100 )
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="GUI/menus/right/settings_stuff"]
+margin_left = 3.0
+margin_top = 2.0
+margin_right = 147.0
+margin_bottom = 95.0
+follow_focus = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/menus/right/settings_stuff/ScrollContainer"]
+margin_right = 143.887
+margin_bottom = 44.0
+rect_min_size = Vector2( 143.887, 0 )
+
+[node name="btn_about" type="Button" parent="GUI/menus/right/settings_stuff/ScrollContainer/VBoxContainer"]
+margin_right = 143.0
+margin_bottom = 20.0
+text = "About"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="btn_settings" type="Button" parent="GUI/menus/right/settings_stuff/ScrollContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 143.0
+margin_bottom = 44.0
+disabled = true
+text = "Settings"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="controls" type="Panel" parent="GUI/menus/right"]
+margin_top = 104.0
+margin_right = 150.0
+margin_bottom = 584.0
+rect_min_size = Vector2( 150, 480 )
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ScrollContainer" type="ScrollContainer" parent="GUI/menus/right/controls"]
+margin_left = 4.0
+margin_top = 2.0
 margin_right = 147.0
-margin_bottom = 584.0
+margin_bottom = 476.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -547,6 +593,7 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/menus/right/controls/ScrollContainer"]
 
 [node name="popups" type="Node2D" parent="GUI"]
+z_index = 5
 
 [node name="plexus_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
@@ -618,6 +665,38 @@ scale = Vector2( 5.73438, 8.01563 )
 z_index = -1
 texture = ExtResource( 4 )
 
+[node name="popup_about" type="WindowDialog" parent="GUI/popups"]
+visible = true
+margin_left = 326.0
+margin_top = 105.0
+margin_right = 796.0
+margin_bottom = 467.0
+window_title = "About"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="GUI/popups/popup_about"]
+margin_top = 4.0
+margin_right = 467.0
+margin_bottom = 361.0
+bbcode_enabled = true
+bbcode_text = "[color=blue]Plexus gen[/color]
+by Wolfyxon
+
+Used stuff:
+-Godot Engine [url]https://github.com/godotengine/godot[/url]
+-PlexusBackground [url]https://github.com/SpyrexDE/PlexusBackground[/url]"
+text = "Plexus gen
+by Wolfyxon
+
+Used stuff:
+-Godot Engine https://github.com/godotengine/godot
+-PlexusBackground https://github.com/SpyrexDE/PlexusBackground"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 3 )
 anims/full_canvas = SubResource( 2 )
@@ -644,3 +723,5 @@ anims/full_canvas = SubResource( 2 )
 [connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_circle_color" to="." method="_on_btn_circle_color_pressed"]
 [connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_modulate" to="." method="_on_btn_modulate_pressed"]
 [connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_bgcolor" to="." method="_on_btn_bgcolor_pressed"]
+[connection signal="pressed" from="GUI/menus/right/settings_stuff/ScrollContainer/VBoxContainer/btn_about" to="." method="_on_btn_about_pressed"]
+[connection signal="meta_clicked" from="GUI/popups/popup_about/RichTextLabel" to="." method="_on_RichTextLabel_meta_clicked"]
