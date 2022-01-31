@@ -6,7 +6,7 @@
 <img src="https://raw.githubusercontent.com/Wolfyxon/plexus-gen/main/github/img/screenshot1.png" width="300px"> <img src="https://raw.githubusercontent.com/Wolfyxon/plexus-gen/main/github/img/screenshot2.png" width="300px"> <img src="https://raw.githubusercontent.com/Wolfyxon/plexus-gen/main/github/img/screenshot3.png" width="300px">
 </p>
 
-
+Latest release may not include latest features, I recommend you to run game from source code but you will need Godot Engine
 **Features:**
 - [x] configurable colors, sizes, visibilities and speeds
 - [x] hideable GUI
