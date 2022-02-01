@@ -34,6 +34,7 @@ func _physics_process(delta):
 	if sync_settings and ready:
 		$canvas/background/Plexus.maxDots = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/max_points.value
 		$canvas/background/Plexus/update.wait_time = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/update_itrv.value
+		$canvas/background/Plexus.speed = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/speed.value
 		$canvas/background/Plexus/spawn_new.wait_time = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/spawn_itrv.value
 		$canvas/background/Plexus/destroy.wait_time = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/despawn_itrv.value
 		$canvas/background/Plexus.line_width = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_width.value
@@ -41,15 +42,16 @@ func _physics_process(delta):
 			$GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_x.value,
 			$GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_y.value
 		)
-		$canvas/background/Plexus/back_effects/Light2D.position = Vector2(
+		$canvas/background/back_effects/Light2D.position = Vector2(
 			$GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_pos_x.value,
 			$GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_pos_y.value
 		)
-		$canvas/background/Plexus/back_effects/Light2D.scale = Vector2(
+		$canvas/background/back_effects/Light2D.scale = Vector2(
 			$GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_size.value,
 			$GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_size.value
 		)
-
+		$canvas/background/Plexus.rect_rotation = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_rotation.value
+		$canvas/background/back_effects.global_rotation = 0
 		
 		$canvas/background/Plexus.enable_circles = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/circles_enabled.pressed
 		$canvas/background/Plexus.enable_lines = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/lines_enabled.pressed
@@ -69,20 +71,21 @@ func _physics_process(delta):
 		else:
 			$canvas/background/Plexus/circleAnim.play("rainbow")
 		$canvas/background/Plexus.modulate = $GUI/popups/modulate.color
-		$canvas/background.color = $GUI/popups/bgcolor.color
+		VisualServer.set_default_clear_color($GUI/popups/bgcolor.color)#$canvas/background.color = $GUI/popups/bgcolor.color
 		
 		if not $GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_rainbow.pressed:
 			pass
 		else:
-			$canvas/background/Plexus/back_effects/lightAnim.play("rainbow")
+			$canvas/background/back_effects/lightAnim.play("rainbow")
 			
-		$canvas/background/Plexus/back_effects/Light2D.self_modulate = $GUI/popups/lightcolor.color
+		$canvas/background/back_effects/Light2D.self_modulate = $GUI/popups/lightcolor.color
 			
-		$canvas/background/Plexus/back_effects/lightAnim.playback_speed = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_rainbow_speed.value
+		$canvas/background/back_effects/lightAnim.playback_speed = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_rainbow_speed.value
 		$canvas/background/Plexus/lineAnim.playback_speed = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_rainbow_speed.value
 		$canvas/background/Plexus/circleAnim.playback_speed = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_rainbow_speed.value
 		
 		$canvas/background/Plexus.plusCircleSize = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_size.value
+		$canvas/background/back_effects/Light2D.z_index = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_zindex/SpinBox.value
 		
 	#Inputs
 	
@@ -111,22 +114,22 @@ func _physics_process(delta):
 		
 		OS.window_fullscreen = not(OS.window_fullscreen)
 	if Input.is_action_just_pressed("exit"):
-		var canExit = true
+	#	var canExit = true
 		for node in $GUI/popups.get_children(): 
 			if node.visible: 
-				canExit = false
+				#canExit = false
 				node.visible = false
 				
 		if $GUI/popups/popup_about.visible:
 			$GUI/popups/popup_about.visible = false
-			canExit = false
+			#canExit = false
 		if not $GUI.visible:
 			if is_rendering: return
 			$GUI.visible = true
-			canExit = false
+			#canExit = false
 			
 			
-		if canExit: get_tree().quit()
+		#if canExit: get_tree().quit()
 	
 	if Input.is_action_just_pressed("hide_gui"):
 		if is_rendering: return

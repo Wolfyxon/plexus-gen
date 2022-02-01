@@ -23,9 +23,11 @@ export var line_color = Color(1,1,1,1)
 export var circle_color = Color(1,1,1,1)
 
 export var plusSpeed = 0
+export var speed = 1
 export var plusCircleSize = 0
 
 export var canUpdate = true
+export var can_move = true
 
 # ====
 func _ready():
@@ -145,4 +147,8 @@ func clearAll():
 			
 func _on_move_timeout():
 	for dot in positions:
-		positions[positions.find(dot)] += velocities[positions.find(dot)]
+		if can_move:
+			positions[positions.find(dot)] += Vector2(
+				velocities[positions.find(dot)].x * speed,
+				velocities[positions.find(dot)].y * speed
+			) #positions[positions.find(dot)] += velocities[positions.find(dot)]
