@@ -65,6 +65,7 @@ func _physics_process(delta):
 		else:
 			$canvas/background/Plexus/lineAnim.play("rainbow")
 		
+		$canvas/background/back_effects/gradient.self_modulate = $GUI/popups/gradient_color.color
 		if not $GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_rainbow.pressed:
 			$canvas/background/Plexus.circle_color = $GUI/popups/circle_color.color
 			$canvas/background/Plexus/circleAnim.stop()
@@ -87,6 +88,8 @@ func _physics_process(delta):
 		$canvas/background/Plexus.plusCircleSize = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_size.value
 		$canvas/background/back_effects/Light2D.z_index = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_zindex/SpinBox.value
 		
+		$canvas/background/back_effects/gradient.scale.x = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/gradient_len.value
+		$canvas/background/back_effects/gradient.rotation_degrees = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/gradient_rot.value
 	#Inputs
 	
 	#Movement ====
@@ -146,6 +149,7 @@ func _physics_process(delta):
 
 func _on_btn_plexus_color_pressed():
 	$GUI/popups/plexus_color.visible = not($GUI/popups/plexus_color.visible)
+	$GUI/popups/gradient_color.visible = false
 	$GUI/popups/modulate.visible = false
 	$GUI/popups/circle_color.visible = false
 	$GUI/popups/bgcolor.visible = false
@@ -154,6 +158,7 @@ func _on_btn_plexus_color_pressed():
 
 func _on_btn_circle_color_pressed():
 	$GUI/popups/circle_color.visible = not($GUI/popups/circle_color.visible)
+	$GUI/popups/gradient_color.visible = false
 	$GUI/popups/modulate.visible = false
 	$GUI/popups/plexus_color.visible = false
 	$GUI/popups/bgcolor.visible = false
@@ -162,6 +167,7 @@ func _on_btn_circle_color_pressed():
 
 func _on_btn_modulate_pressed():
 	$GUI/popups/modulate.visible = not($GUI/popups/modulate.visible)
+	$GUI/popups/gradient_color.visible = false
 	$GUI/popups/plexus_color.visible = false
 	$GUI/popups/circle_color.visible = false
 	$GUI/popups/bgcolor.visible = false
@@ -170,17 +176,28 @@ func _on_btn_modulate_pressed():
 
 func _on_btn_bgcolor_pressed():
 	$GUI/popups/bgcolor.visible = not($GUI/popups/bgcolor.visible)
+	$GUI/popups/gradient_color.visible = false
 	$GUI/popups/plexus_color.visible = false
 	$GUI/popups/circle_color.visible = false
 	$GUI/popups/lightcolor.visible = false
-	$GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_modulate.visible = false
+	$GUI/popups/modulate.visible = false
 
 func _on_btn_light_color_pressed():
 	$GUI/popups/lightcolor.visible = not($GUI/popups/lightcolor.visible)
+	$GUI/popups/gradient_color.visible = false
 	$GUI/popups/plexus_color.visible = false
 	$GUI/popups/circle_color.visible = false
 	$GUI/popups/bgcolor.visible = false
-	$GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_modulate.visible = false
+	$GUI/popups/modulate.visible = false
+
+func _on_btn_gradient_color_pressed():
+	$GUI/popups/gradient_color.visible = not($GUI/popups/gradient_color.visible)
+	$GUI/popups/lightcolor.visible = false
+	$GUI/popups/plexus_color.visible = false
+	$GUI/popups/circle_color.visible = false
+	$GUI/popups/bgcolor.visible = false
+	$GUI/popups/modulate.visible = false
+
 
 func _on_btn_about_pressed():
 	$GUI/popups/popup_about.popup()
@@ -230,6 +247,9 @@ func _on_btn_clear_pressed():
 
 func _on_btn_reset_pressed():
 	get_tree().change_scene("res://Main.tscn")
+
+
+
 
 
 
