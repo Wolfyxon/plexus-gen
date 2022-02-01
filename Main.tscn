@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://src/scripts/Plexus.gd" type="Script" id=1]
 [ext_resource path="res://src/scripts/Main.gd" type="Script" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://icon.png" type="Texture" id=4]
 [ext_resource path="res://src/img/white.png" type="Texture" id=5]
 [ext_resource path="res://src/scripts/bottom_status_lbl.gd" type="Script" id=6]
+[ext_resource path="res://src/img/effects/light.png" type="Texture" id=7]
+[ext_resource path="res://src/materials/unshaded.tres" type="Material" id=8]
 
 [sub_resource type="Animation" id=5]
 length = 0.001
@@ -69,6 +71,38 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 0, 0, 1 ), Color( 0, 1, 0.227451, 1 ), Color( 0.054902, 0, 1, 1 ), Color( 1, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("../../../../GUI/popups/lightcolor:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "rainbow"
+length = 1.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("../../../../GUI/popups/lightcolor:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 0, 1, 0.180392, 1 ), Color( 0.0313726, 0, 1, 1 ), Color( 1, 0, 0, 1 ) ]
 }
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -253,7 +287,6 @@ __meta__ = {
 }
 
 [node name="Plexus" type="Control" parent="canvas/background"]
-visible = false
 margin_left = -253.0
 margin_top = -25.0
 margin_right = 771.0
@@ -295,7 +328,19 @@ anims/rainbow = SubResource( 4 )
 anims/RESET = SubResource( 7 )
 anims/rainbow = SubResource( 6 )
 
+[node name="back_effects" type="Node2D" parent="canvas/background/Plexus"]
+position = Vector2( 907, 425 )
+
+[node name="Light2D" type="Sprite" parent="canvas/background/Plexus/back_effects"]
+position = Vector2( 402, 360 )
+texture = ExtResource( 7 )
+
+[node name="lightAnim" type="AnimationPlayer" parent="canvas/background/Plexus/back_effects"]
+anims/RESET = SubResource( 9 )
+anims/rainbow = SubResource( 8 )
+
 [node name="GUI" type="Node2D" parent="."]
+material = ExtResource( 8 )
 z_index = 1
 
 [node name="menus" type="HBoxContainer" parent="GUI"]
@@ -330,13 +375,15 @@ margin_left = 3.0
 margin_top = 3.0
 margin_right = 259.0
 margin_bottom = 570.0
+scroll_vertical = 419
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/menus/left/properties/ScrollContainer"]
+margin_top = -419.0
 margin_right = 211.0
-margin_bottom = 911.0
+margin_bottom = 686.0
 rect_min_size = Vector2( 200, 0 )
 custom_constants/separation = 9
 alignment = 1
@@ -688,7 +735,7 @@ text = "Update"
 margin_top = 362.0
 margin_right = 211.0
 margin_bottom = 402.0
-text = "Pause rendering"
+text = "Pause rendering [F2]"
 
 [node name="circles_enabled" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 margin_top = 411.0
@@ -784,34 +831,77 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="btn_plexus_color" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+[node name="light_rainbow" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 margin_top = 706.0
 margin_right = 211.0
-margin_bottom = 726.0
+margin_bottom = 746.0
+text = "Light rainbow mode"
+
+[node name="light_rainbow_speed" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 755.0
+margin_right = 211.0
+margin_bottom = 771.0
+rect_min_size = Vector2( 110, 0 )
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+value = 1.0
+script = ExtResource( 3 )
+
+[node name="edit" type="SpinBox" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_rainbow_speed"]
+margin_left = 172.0
+margin_top = -9.0
+margin_right = 246.0
+margin_bottom = 15.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_rainbow_speed"]
+margin_left = 4.0
+margin_top = -12.0
+margin_right = 74.0
+margin_bottom = 2.0
+text = "Light rainbow speed"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="btn_plexus_color" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 780.0
+margin_right = 211.0
+margin_bottom = 800.0
 text = "Select line color"
 
 [node name="btn_circle_color" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 735.0
+margin_top = 809.0
 margin_right = 211.0
-margin_bottom = 755.0
+margin_bottom = 829.0
 text = "Select circle color"
 
-[node name="btn_modulate" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 764.0
+[node name="btn_light_color" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 838.0
 margin_right = 211.0
-margin_bottom = 784.0
+margin_bottom = 858.0
+text = "Select light color"
+
+[node name="btn_modulate" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 867.0
+margin_right = 211.0
+margin_bottom = 887.0
 text = "Select global color"
 
 [node name="btn_bgcolor" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 793.0
+margin_top = 896.0
 margin_right = 211.0
-margin_bottom = 813.0
+margin_bottom = 916.0
 text = "Select background color"
 
 [node name="flip_x" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 822.0
+margin_top = 925.0
 margin_right = 211.0
-margin_bottom = 862.0
+margin_bottom = 965.0
 text = "flip horizontal"
 
 [node name="Label" type="Label" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/flip_x"]
@@ -825,9 +915,9 @@ __meta__ = {
 }
 
 [node name="flip_y" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 871.0
+margin_top = 974.0
 margin_right = 211.0
-margin_bottom = 911.0
+margin_bottom = 1014.0
 disabled = true
 text = "flip vertical"
 
@@ -841,7 +931,109 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Control3" type="Control" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 1023.0
+margin_right = 211.0
+margin_bottom = 1030.5
+rect_min_size = Vector2( 0, 7.503 )
+
+[node name="light_size" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 1039.0
+margin_right = 211.0
+margin_bottom = 1055.0
+rect_min_size = Vector2( 110, 0 )
+max_value = 5.0
+step = 0.01
+value = 1.0
+script = ExtResource( 3 )
+
+[node name="edit" type="SpinBox" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_size"]
+margin_left = 172.0
+margin_top = -9.0
+margin_right = 246.0
+margin_bottom = 15.0
+step = 0.1
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_size"]
+margin_left = 4.0
+margin_top = -12.0
+margin_right = 74.0
+margin_bottom = 2.0
+text = "Light size"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="light_pos_x" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 1064.0
+margin_right = 211.0
+margin_bottom = 1080.0
+rect_min_size = Vector2( 110, 0 )
+min_value = -1000.0
+max_value = 1000.0
+step = 0.01
+value = 397.0
+script = ExtResource( 3 )
+
+[node name="edit" type="SpinBox" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_pos_x"]
+margin_left = 172.0
+margin_top = -9.0
+margin_right = 246.0
+margin_bottom = 15.0
+step = 0.1
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_pos_x"]
+margin_left = 4.0
+margin_top = -12.0
+margin_right = 74.0
+margin_bottom = 2.0
+text = "Light position X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="light_pos_y" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 1089.0
+margin_right = 211.0
+margin_bottom = 1105.0
+rect_min_size = Vector2( 110, 0 )
+min_value = -1000.0
+max_value = 1000.0
+step = 0.01
+value = 360.0
+script = ExtResource( 3 )
+
+[node name="edit" type="SpinBox" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_pos_y"]
+margin_left = 172.0
+margin_top = -9.0
+margin_right = 246.0
+margin_bottom = 15.0
+step = 0.1
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_pos_y"]
+margin_left = 4.0
+margin_top = -12.0
+margin_right = 74.0
+margin_bottom = 2.0
+text = "Light position Y"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="right" type="VBoxContainer" parent="GUI/menus"]
+use_parent_material = true
 margin_left = 878.0
 margin_right = 1028.0
 margin_bottom = 590.0
@@ -850,6 +1042,8 @@ __meta__ = {
 }
 
 [node name="settings_stuff" type="Panel" parent="GUI/menus/right"]
+material = ExtResource( 8 )
+use_parent_material = true
 margin_right = 150.0
 margin_bottom = 48.089
 rect_min_size = Vector2( 150, 48.089 )
@@ -892,6 +1086,7 @@ __meta__ = {
 }
 
 [node name="controls" type="Panel" parent="GUI/menus/right"]
+material = ExtResource( 8 )
 margin_top = 52.0
 margin_right = 150.0
 margin_bottom = 574.256
@@ -902,6 +1097,7 @@ __meta__ = {
 }
 
 [node name="ScrollContainer" type="ScrollContainer" parent="GUI/menus/right/controls"]
+use_parent_material = true
 margin_left = 4.0
 margin_top = 2.0
 margin_right = 148.0
@@ -912,15 +1108,18 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/menus/right/controls/ScrollContainer"]
+use_parent_material = true
 margin_right = 144.0
 margin_bottom = 254.0
 
 [node name="Control" type="Control" parent="GUI/menus/right/controls/ScrollContainer/VBoxContainer"]
+use_parent_material = true
 margin_right = 144.0
 margin_bottom = 10.577
 rect_min_size = Vector2( 0, 10.577 )
 
 [node name="render_preview" type="TextureRect" parent="GUI/menus/right/controls/ScrollContainer/VBoxContainer"]
+use_parent_material = true
 margin_top = 14.0
 margin_right = 144.0
 margin_bottom = 114.0
@@ -939,12 +1138,14 @@ __meta__ = {
 }
 
 [node name="btn_save_img" type="Button" parent="GUI/menus/right/controls/ScrollContainer/VBoxContainer"]
+use_parent_material = true
 margin_top = 118.0
 margin_right = 144.0
 margin_bottom = 138.0
 text = "Save PNG"
 
 [node name="btn_record_gif" type="Button" parent="GUI/menus/right/controls/ScrollContainer/VBoxContainer"]
+use_parent_material = true
 margin_top = 142.0
 margin_right = 144.0
 margin_bottom = 162.0
@@ -952,6 +1153,7 @@ disabled = true
 text = "Record GIF"
 
 [node name="btn_record" type="Button" parent="GUI/menus/right/controls/ScrollContainer/VBoxContainer"]
+use_parent_material = true
 margin_top = 166.0
 margin_right = 144.0
 margin_bottom = 186.0
@@ -959,12 +1161,14 @@ disabled = true
 text = "Record video"
 
 [node name="btn_openpath" type="Button" parent="GUI/menus/right/controls/ScrollContainer/VBoxContainer"]
+use_parent_material = true
 margin_top = 190.0
 margin_right = 144.0
 margin_bottom = 210.0
 text = "Open export folder"
 
 [node name="open_after_render" type="CheckButton" parent="GUI/menus/right/controls/ScrollContainer/VBoxContainer"]
+use_parent_material = true
 margin_top = 214.0
 margin_right = 144.0
 margin_bottom = 254.0
@@ -1044,7 +1248,26 @@ scale = Vector2( 5.73438, 8.01563 )
 z_index = -1
 texture = ExtResource( 4 )
 
+[node name="lightcolor" type="ColorPicker" parent="GUI/popups"]
+visible = false
+margin_left = 382.0
+margin_top = 102.0
+margin_right = 690.0
+margin_bottom = 564.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite2" type="Sprite" parent="GUI/popups/lightcolor"]
+self_modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 151.5, 224.5 )
+scale = Vector2( 5.73438, 8.01563 )
+z_index = -1
+texture = ExtResource( 4 )
+
 [node name="popup_about" type="WindowDialog" parent="GUI/popups"]
+visible = true
+material = ExtResource( 8 )
 margin_left = 326.0
 margin_top = 105.0
 margin_right = 796.0
@@ -1064,12 +1287,26 @@ bbcode_text = "[color=blue]Plexus gen[/color] v1.0
 by Wolfyxon
 [color=red][url]https://wolfyxon.github.io[/url][/color]
 
+CONTROLS:
+F1 - hide/show GUI
+F11 - switch fullscreen mode
+SPACE - play/pause plexus
+
+If you find any bugs or you want to suggest something visit [url]https://github.com/Wolfyxon/plexus-gen/issues[/url]
+
 Used stuff:
 -Godot Engine [url]https://github.com/godotengine/godot[/url]
 -PlexusBackground [url]https://github.com/SpyrexDE/PlexusBackground[/url]"
 text = "Plexus gen v1.0
 by Wolfyxon
 https://wolfyxon.github.io
+
+CONTROLS:
+F1 - hide/show GUI
+F2 - resume/pause plexus rendering
+F11 - switch fullscreen mode
+
+If you find any bugs or you want to suggest something visit https://github.com/Wolfyxon/plexus-gen/issues
 
 Used stuff:
 -Godot Engine https://github.com/godotengine/godot
@@ -1080,9 +1317,11 @@ __meta__ = {
 }
 
 [node name="txt" type="Node2D" parent="GUI"]
+material = ExtResource( 8 )
 z_index = 1
 
 [node name="bottom_status" type="RichTextLabel" parent="GUI/txt"]
+use_parent_material = true
 margin_left = 255.0
 margin_top = 584.0
 margin_right = 866.0
@@ -1098,22 +1337,26 @@ __meta__ = {
 
 [node name="bg" type="Sprite" parent="GUI/txt/bottom_status"]
 self_modulate = Color( 0.219608, 0.219608, 0.219608, 1 )
+use_parent_material = true
 position = Vector2( 259.5, 7.25 )
 scale = Vector2( 1015, 15.5 )
 z_index = -1
 texture = ExtResource( 5 )
 
 [node name="Label" type="Label" parent="GUI/txt"]
-margin_left = 513.0
+use_parent_material = true
+margin_left = 378.0
 margin_top = 9.0
-margin_right = 855.0
+margin_right = 863.0
 margin_bottom = 23.0
-text = "F1 - hide GUI |  F11 - fullscreen mode"
+text = "F1 - hide GUI |  F11 - fullscreen mode | for more controls see \"about\""
+align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="fps" type="Label" parent="GUI/txt"]
+use_parent_material = true
 margin_left = 268.0
 margin_top = 9.0
 margin_right = 395.0
@@ -1125,10 +1368,14 @@ __meta__ = {
 
 [node name="bg2" type="Sprite" parent="GUI/txt"]
 self_modulate = Color( 0.219608, 0.219608, 0.219608, 1 )
+use_parent_material = true
 position = Vector2( 566, 15.375 )
 scale = Vector2( 600, 16.75 )
 z_index = -1
 texture = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 3 )
@@ -1164,10 +1411,19 @@ anims/full_canvas = SubResource( 2 )
 [connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_rainbow_speed/edit" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_rainbow_speed" method="_on_edit_value_changed"]
 [connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_rainbow_speed" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_rainbow_speed" method="_on_max_points_value_changed"]
 [connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_rainbow_speed/edit" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_rainbow_speed" method="_on_edit_value_changed"]
+[connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_rainbow_speed" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_rainbow_speed" method="_on_max_points_value_changed"]
+[connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_rainbow_speed/edit" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_rainbow_speed" method="_on_edit_value_changed"]
 [connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_plexus_color" to="." method="_on_btn_plexus_color_pressed"]
 [connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_circle_color" to="." method="_on_btn_circle_color_pressed"]
+[connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_light_color" to="." method="_on_btn_light_color_pressed"]
 [connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_modulate" to="." method="_on_btn_modulate_pressed"]
 [connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_bgcolor" to="." method="_on_btn_bgcolor_pressed"]
+[connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_size" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_size" method="_on_max_points_value_changed"]
+[connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_size/edit" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_size" method="_on_edit_value_changed"]
+[connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_pos_x" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_pos_x" method="_on_max_points_value_changed"]
+[connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_pos_x/edit" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_pos_x" method="_on_edit_value_changed"]
+[connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_pos_y" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_pos_y" method="_on_max_points_value_changed"]
+[connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_pos_y/edit" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_pos_y" method="_on_edit_value_changed"]
 [connection signal="pressed" from="GUI/menus/right/settings_stuff/ScrollContainer/VBoxContainer/btn_about" to="." method="_on_btn_about_pressed"]
 [connection signal="pressed" from="GUI/menus/right/controls/ScrollContainer/VBoxContainer/btn_save_img" to="." method="_on_btn_save_img_pressed"]
 [connection signal="pressed" from="GUI/menus/right/controls/ScrollContainer/VBoxContainer/btn_openpath" to="." method="_on_btn_openpath_pressed"]
