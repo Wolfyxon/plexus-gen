@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://src/scripts/Plexus.gd" type="Script" id=1]
 [ext_resource path="res://src/scripts/Main.gd" type="Script" id=2]
@@ -6,6 +6,70 @@
 [ext_resource path="res://icon.png" type="Texture" id=4]
 [ext_resource path="res://src/img/white.png" type="Texture" id=5]
 [ext_resource path="res://src/scripts/bottom_status_lbl.gd" type="Script" id=6]
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:line_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "rainbow"
+length = 1.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:line_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 0, 1, 0.27451, 1 ), Color( 0.0784314, 0, 1, 1 ), Color( 1, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:circle_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "rainbow"
+length = 1.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:circle_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 0, 1, 0.227451, 1 ), Color( 0.054902, 0, 1, 1 ), Color( 1, 0, 0, 1 ) ]
+}
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.00784314, 0.0117647, 0.290196, 1 )
@@ -201,6 +265,8 @@ __meta__ = {
 }
 maxDots = 100
 squared = true
+rainbow_lines = false
+rainbow_circles = false
 
 [node name="update" type="Timer" parent="canvas/background/Plexus"]
 process_mode = 0
@@ -220,6 +286,14 @@ autostart = true
 [node name="move" type="Timer" parent="canvas/background/Plexus"]
 wait_time = 0.01
 autostart = true
+
+[node name="lineAnim" type="AnimationPlayer" parent="canvas/background/Plexus"]
+anims/RESET = SubResource( 5 )
+anims/rainbow = SubResource( 4 )
+
+[node name="circleAnim" type="AnimationPlayer" parent="canvas/background/Plexus"]
+anims/RESET = SubResource( 7 )
+anims/rainbow = SubResource( 6 )
 
 [node name="GUI" type="Node2D" parent="."]
 z_index = 1
@@ -261,34 +335,41 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/menus/left/properties/ScrollContainer"]
-margin_right = 200.0
-margin_bottom = 738.0
+margin_right = 211.0
+margin_bottom = 911.0
 rect_min_size = Vector2( 200, 0 )
 custom_constants/separation = 9
 alignment = 1
 
 [node name="Control2" type="Control" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_right = 200.0
+margin_right = 211.0
 margin_bottom = 2.795
 rect_min_size = Vector2( 0, 2.795 )
 
 [node name="btn_reset" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
 self_modulate = Color( 1, 0, 0, 1 )
 margin_top = 11.0
-margin_right = 200.0
+margin_right = 211.0
 margin_bottom = 31.0
 text = "RESET "
 
-[node name="Control" type="Control" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+[node name="btn_clear" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+self_modulate = Color( 1, 0, 0, 1 )
 margin_top = 40.0
-margin_right = 200.0
-margin_bottom = 50.0
+margin_right = 211.0
+margin_bottom = 60.0
+text = "Clear canvas"
+
+[node name="Control" type="Control" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 69.0
+margin_right = 211.0
+margin_bottom = 79.0
 rect_min_size = Vector2( 0, 10 )
 
 [node name="max_points" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 59.0
-margin_right = 200.0
-margin_bottom = 75.0
+margin_top = 88.0
+margin_right = 211.0
+margin_bottom = 104.0
 rect_min_size = Vector2( 110, 0 )
 max_value = 500.0
 value = 100.0
@@ -315,9 +396,9 @@ __meta__ = {
 }
 
 [node name="update_itrv" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 84.0
-margin_right = 200.0
-margin_bottom = 100.0
+margin_top = 113.0
+margin_right = 211.0
+margin_bottom = 129.0
 rect_min_size = Vector2( 120, 0 )
 min_value = 0.01
 max_value = 2.0
@@ -347,9 +428,9 @@ __meta__ = {
 }
 
 [node name="spawn_itrv" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 109.0
-margin_right = 200.0
-margin_bottom = 125.0
+margin_top = 138.0
+margin_right = 211.0
+margin_bottom = 154.0
 rect_min_size = Vector2( 120, 0 )
 min_value = 0.01
 max_value = 2.0
@@ -379,9 +460,9 @@ __meta__ = {
 }
 
 [node name="despawn_itrv" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 134.0
-margin_right = 200.0
-margin_bottom = 150.0
+margin_top = 163.0
+margin_right = 211.0
+margin_bottom = 179.0
 rect_min_size = Vector2( 120, 0 )
 min_value = 0.01
 max_value = 10.0
@@ -411,9 +492,9 @@ __meta__ = {
 }
 
 [node name="move_itrv" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 159.0
-margin_right = 200.0
-margin_bottom = 175.0
+margin_top = 188.0
+margin_right = 211.0
+margin_bottom = 204.0
 rect_min_size = Vector2( 170, 0 )
 min_value = 0.01
 max_value = 10.0
@@ -443,9 +524,9 @@ __meta__ = {
 }
 
 [node name="line_width" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 184.0
-margin_right = 200.0
-margin_bottom = 200.0
+margin_top = 213.0
+margin_right = 211.0
+margin_bottom = 229.0
 rect_min_size = Vector2( 170, 0 )
 min_value = 0.01
 max_value = 1.0
@@ -474,10 +555,41 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="circle_size" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 238.0
+margin_right = 211.0
+margin_bottom = 254.0
+rect_min_size = Vector2( 170, 0 )
+max_value = 20.0
+step = 0.1
+value = 1.0
+script = ExtResource( 3 )
+
+[node name="edit" type="SpinBox" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_size"]
+margin_left = 172.0
+margin_top = -9.0
+margin_right = 246.0
+margin_bottom = 15.0
+step = 0.01
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_size"]
+margin_left = 4.0
+margin_top = -12.0
+margin_right = 74.0
+margin_bottom = 2.0
+text = "Circle size"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="global_size_x" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 209.0
-margin_right = 200.0
-margin_bottom = 225.0
+margin_top = 263.0
+margin_right = 211.0
+margin_bottom = 279.0
 rect_min_size = Vector2( 110, 0 )
 min_value = 0.1
 step = 0.01
@@ -505,9 +617,9 @@ __meta__ = {
 }
 
 [node name="global_size_y" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 234.0
-margin_right = 200.0
-margin_bottom = 250.0
+margin_top = 288.0
+margin_right = 211.0
+margin_bottom = 304.0
 rect_min_size = Vector2( 110, 0 )
 min_value = 0.1
 step = 0.01
@@ -566,73 +678,140 @@ __meta__ = {
 }
 
 [node name="update_enabled" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 259.0
-margin_right = 200.0
-margin_bottom = 299.0
+margin_top = 313.0
+margin_right = 211.0
+margin_bottom = 353.0
 pressed = true
 text = "Update"
 
 [node name="pause_render" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 308.0
-margin_right = 200.0
-margin_bottom = 348.0
+margin_top = 362.0
+margin_right = 211.0
+margin_bottom = 402.0
 text = "Pause rendering"
 
 [node name="circles_enabled" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 357.0
-margin_right = 200.0
-margin_bottom = 397.0
+margin_top = 411.0
+margin_right = 211.0
+margin_bottom = 451.0
 hint_tooltip = "Enables/disabled circles "
 text = "Draw circles"
 
 [node name="lines_enabled" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 406.0
-margin_right = 200.0
-margin_bottom = 446.0
+margin_top = 460.0
+margin_right = 211.0
+margin_bottom = 500.0
 pressed = true
 text = "Draw lines"
 
 [node name="right_angles" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 455.0
-margin_right = 200.0
-margin_bottom = 495.0
+margin_top = 509.0
+margin_right = 211.0
+margin_bottom = 549.0
 text = "right angles"
 
+[node name="line_rainbow" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 558.0
+margin_right = 211.0
+margin_bottom = 598.0
+text = "Line rainbow mode"
+
+[node name="line_rainbow_speed" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 607.0
+margin_right = 211.0
+margin_bottom = 623.0
+rect_min_size = Vector2( 110, 0 )
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+value = 1.0
+script = ExtResource( 3 )
+
+[node name="edit" type="SpinBox" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_rainbow_speed"]
+margin_left = 172.0
+margin_top = -9.0
+margin_right = 246.0
+margin_bottom = 15.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_rainbow_speed"]
+margin_left = 4.0
+margin_top = -12.0
+margin_right = 74.0
+margin_bottom = 2.0
+text = "Line rainbow speed"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="circle_rainbow" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 632.0
+margin_right = 211.0
+margin_bottom = 672.0
+text = "Circle rainbow mode"
+
+[node name="circle_rainbow_speed" type="HSlider" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
+margin_top = 681.0
+margin_right = 211.0
+margin_bottom = 697.0
+rect_min_size = Vector2( 110, 0 )
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+value = 1.0
+script = ExtResource( 3 )
+
+[node name="edit" type="SpinBox" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_rainbow_speed"]
+margin_left = 172.0
+margin_top = -9.0
+margin_right = 246.0
+margin_bottom = 15.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_rainbow_speed"]
+margin_left = 4.0
+margin_top = -12.0
+margin_right = 74.0
+margin_bottom = 2.0
+text = "Circle rainbow speed"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="btn_plexus_color" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 504.0
-margin_right = 200.0
-margin_bottom = 524.0
+margin_top = 706.0
+margin_right = 211.0
+margin_bottom = 726.0
 text = "Select line color"
 
 [node name="btn_circle_color" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 533.0
-margin_right = 200.0
-margin_bottom = 553.0
+margin_top = 735.0
+margin_right = 211.0
+margin_bottom = 755.0
 text = "Select circle color"
 
 [node name="btn_modulate" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 562.0
-margin_right = 200.0
-margin_bottom = 582.0
+margin_top = 764.0
+margin_right = 211.0
+margin_bottom = 784.0
 text = "Select global color"
 
 [node name="btn_bgcolor" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 591.0
-margin_right = 200.0
-margin_bottom = 611.0
+margin_top = 793.0
+margin_right = 211.0
+margin_bottom = 813.0
 text = "Select background color"
 
-[node name="btn_clear" type="Button" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-self_modulate = Color( 1, 0, 0, 1 )
-margin_top = 620.0
-margin_right = 200.0
-margin_bottom = 640.0
-text = "Clear"
-
 [node name="flip_x" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 649.0
-margin_right = 200.0
-margin_bottom = 689.0
+margin_top = 822.0
+margin_right = 211.0
+margin_bottom = 862.0
 text = "flip horizontal"
 
 [node name="Label" type="Label" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer/flip_x"]
@@ -646,9 +825,9 @@ __meta__ = {
 }
 
 [node name="flip_y" type="CheckButton" parent="GUI/menus/left/properties/ScrollContainer/VBoxContainer"]
-margin_top = 698.0
-margin_right = 200.0
-margin_bottom = 738.0
+margin_top = 871.0
+margin_right = 211.0
+margin_bottom = 911.0
 disabled = true
 text = "flip vertical"
 
@@ -797,10 +976,10 @@ z_index = 5
 
 [node name="plexus_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 366.0
-margin_top = 86.0
-margin_right = 674.0
-margin_bottom = 548.0
+margin_left = 370.0
+margin_top = 90.0
+margin_right = 678.0
+margin_bottom = 552.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -814,10 +993,10 @@ texture = ExtResource( 4 )
 
 [node name="circle_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 366.0
-margin_top = 86.0
-margin_right = 674.0
-margin_bottom = 548.0
+margin_left = 370.0
+margin_top = 90.0
+margin_right = 678.0
+margin_bottom = 552.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -831,10 +1010,10 @@ texture = ExtResource( 4 )
 
 [node name="modulate" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 370.0
-margin_top = 90.0
-margin_right = 678.0
-margin_bottom = 552.0
+margin_left = 374.0
+margin_top = 94.0
+margin_right = 682.0
+margin_bottom = 556.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -848,10 +1027,10 @@ texture = ExtResource( 4 )
 
 [node name="bgcolor" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 374.0
-margin_top = 94.0
-margin_right = 682.0
-margin_bottom = 556.0
+margin_left = 378.0
+margin_top = 98.0
+margin_right = 686.0
+margin_bottom = 560.0
 color = Color( 0, 0, 0, 1 )
 edit_alpha = false
 __meta__ = {
@@ -960,6 +1139,7 @@ anims/full_canvas = SubResource( 2 )
 [connection signal="timeout" from="canvas/background/Plexus/destroy" to="canvas/background/Plexus" method="_on_destroy_timeout"]
 [connection signal="timeout" from="canvas/background/Plexus/move" to="canvas/background/Plexus" method="_on_move_timeout"]
 [connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_reset" to="." method="_on_btn_reset_pressed"]
+[connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_clear" to="." method="_on_btn_clear_pressed"]
 [connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/max_points" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/max_points" method="_on_max_points_value_changed"]
 [connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/max_points/edit" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/max_points" method="_on_edit_value_changed"]
 [connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/update_itrv" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/update_itrv" method="_on_max_points_value_changed"]
@@ -972,17 +1152,22 @@ anims/full_canvas = SubResource( 2 )
 [connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/move_itrv/edit" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/move_itrv" method="_on_edit_value_changed"]
 [connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_width" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_width" method="_on_max_points_value_changed"]
 [connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_width/edit" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_width" method="_on_edit_value_changed"]
+[connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_size" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_size" method="_on_max_points_value_changed"]
+[connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_size/edit" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_size" method="_on_edit_value_changed"]
 [connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_x" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_x" method="_on_max_points_value_changed"]
 [connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_x/edit" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_x" method="_on_edit_value_changed"]
 [connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_y" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_y" method="_on_max_points_value_changed"]
 [connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_y/edit" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_y" method="_on_edit_value_changed"]
 [connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_x3" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_x3" method="_on_max_points_value_changed"]
 [connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_x3/edit" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/global_size_x3" method="_on_edit_value_changed"]
+[connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_rainbow_speed" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_rainbow_speed" method="_on_max_points_value_changed"]
+[connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_rainbow_speed/edit" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_rainbow_speed" method="_on_edit_value_changed"]
+[connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_rainbow_speed" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_rainbow_speed" method="_on_max_points_value_changed"]
+[connection signal="value_changed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_rainbow_speed/edit" to="GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_rainbow_speed" method="_on_edit_value_changed"]
 [connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_plexus_color" to="." method="_on_btn_plexus_color_pressed"]
 [connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_circle_color" to="." method="_on_btn_circle_color_pressed"]
 [connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_modulate" to="." method="_on_btn_modulate_pressed"]
 [connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_bgcolor" to="." method="_on_btn_bgcolor_pressed"]
-[connection signal="pressed" from="GUI/menus/left/properties/ScrollContainer/VBoxContainer/btn_clear" to="." method="_on_btn_clear_pressed"]
 [connection signal="pressed" from="GUI/menus/right/settings_stuff/ScrollContainer/VBoxContainer/btn_about" to="." method="_on_btn_about_pressed"]
 [connection signal="pressed" from="GUI/menus/right/controls/ScrollContainer/VBoxContainer/btn_save_img" to="." method="_on_btn_save_img_pressed"]
 [connection signal="pressed" from="GUI/menus/right/controls/ScrollContainer/VBoxContainer/btn_openpath" to="." method="_on_btn_openpath_pressed"]

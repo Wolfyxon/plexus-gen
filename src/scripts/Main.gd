@@ -7,6 +7,7 @@ var is_rendering = false
 var ready = false
 
 func _ready():
+	
 	$canvas/background/Plexus.visible = true
 	$AnimationPlayer.play("RESET")
 	ready = true
@@ -48,18 +49,53 @@ func _physics_process(delta):
 		get_tree().paused = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/pause_render.pressed
 		$canvas/background/Plexus.squared = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/right_angles.pressed
 		
-		$canvas/background/Plexus.line_color = $GUI/popups/plexus_color.color
-		$canvas/background/Plexus.circle_color = $GUI/popups/circle_color.color
+		if not $canvas/background/Plexus/lineAnim.is_playing():
+			$canvas/background/Plexus.line_color = $GUI/popups/plexus_color.color
+			
+		if not $canvas/background/Plexus/circleAnim.is_playing():
+			$canvas/background/Plexus.circle_color = $GUI/popups/circle_color.color
 		$canvas/background/Plexus.modulate = $GUI/popups/modulate.color
 		$canvas/background.color = $GUI/popups/bgcolor.color
 		
+		if $GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_rainbow.pressed:
+			$canvas/background/Plexus/lineAnim.play("rainbow")
+		else:
+			$canvas/background/Plexus/lineAnim.stop()
+			
+		if $GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_rainbow.pressed:
+			$canvas/background/Plexus/circleAnim.play("rainbow")
+		else:
+			$canvas/background/Plexus/circleAnim.stop()
 		
+		$canvas/background/Plexus/lineAnim.playback_speed = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/line_rainbow_speed.value
+		$canvas/background/Plexus/circleAnim.playback_speed = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_rainbow_speed.value
 		
-		
-		
+		$canvas/background/Plexus.plusCircleSize = $GUI/menus/left/properties/ScrollContainer/VBoxContainer/circle_size.value
 		
 	#Inputs
+	
+	#Movement ====
+	var move_speed = 0.05
+	if Input.is_action_pressed("move_up"):
+		$canvas/background/Plexus.move(0,move_speed)
+		pass
+	if Input.is_action_pressed("move_down"):
+		$canvas/background/Plexus.move(0,-move_speed)
+		pass
+	if Input.is_action_pressed("move_left"):
+		$canvas/background/Plexus.move(move_speed,0)
+		pass
+	if Input.is_action_pressed("move_right"):
+		$canvas/background/Plexus.move(-move_speed,0)
+		pass
+	
+	#======
+	
+	if Input.is_action_just_pressed("test"):
+		pass
+		
 	if Input.is_action_just_pressed("fullscreen"):
+		
 		OS.window_fullscreen = not(OS.window_fullscreen)
 	if Input.is_action_just_pressed("exit"):
 		var canExit = true

@@ -9,14 +9,21 @@ var sizes = []
 var velocities = []
 
 # ====
+
 export var enable_circles = false
 export var enable_lines = true
 export var squared = false
 
-export var line_width = 1.0
+export var rainbow_lines = true
+export var rainbow_circles = true
+
+export var line_width = 1.0 #doesn't work, also when it's bigger than 1 it lags a lot
 
 export var line_color = Color(1,1,1,1)
 export var circle_color = Color(1,1,1,1)
+
+export var plusSpeed = 0
+export var plusCircleSize = 0
 
 export var canUpdate = true
 
@@ -38,9 +45,6 @@ func spawnNew(pos = null):
 	velocities.append(vel)
 
 func _draw():
-	for dot in positions:
-		var dotID = positions.find(dot)
-		if enable_circles: draw_circle(positions[dotID], sizes[dotID], circle_color)
 	#Connecting
 	for dot in positions:
 		for otherDot in positions:
@@ -55,7 +59,29 @@ func _draw():
 							tmp_otherDot = Vector2(dot.x,dot.y + rand_range(-200,200))
 						pass
 					else: tmp_otherDot = otherDot
-					draw_line(dot,tmp_otherDot,line_color, line_width, true) #draw_line(dot, otherDot, Color(1,1,1, alpha), 1.0, true)
+					
+					var tmpColor
+					if rainbow_lines:
+						tmpColor = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1),1)
+					else:
+						tmpColor = line_color
+					draw_line(dot,tmp_otherDot,tmpColor, line_width, true) #draw_line(dot, otherDot, Color(1,1,1, alpha), 1.0, true)
+
+	for dot in positions:
+		var dotID = positions.find(dot)
+		var tmpColor
+		if rainbow_circles:
+			tmpColor = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1),1)
+		else: 
+			tmpColor = circle_color
+			
+		if enable_circles: 
+			draw_circle(positions[dotID], sizes[dotID]*plusCircleSize, tmpColor)
+
+func move(x,y):
+	yield(get_tree().create_timer(0.1),"timeout")
+	for i in range(velocities.size()):
+		velocities[i] = Vector2(velocities[i].x+x,velocities[i].y+y)
 
 
 func newRandPos():
