@@ -210,16 +210,21 @@ func _on_btn_save_img_pressed():
 	is_rendering = true
 	print("Rendering single image...")
 	$AnimationPlayer.play("full_canvas")
+	$GUI/menus/left/properties/ScrollContainer/VBoxContainer/pause_render.pressed = true
 	yield(get_tree().create_timer(0.5),"timeout")
 	
 	var img = get_viewport().get_texture().get_data()
 	yield(get_tree(), "idle_frame")
 	yield(get_tree(), "idle_frame")
+	
+	if $GUI/menus/left/properties/ScrollContainer/VBoxContainer/flip_x.pressed: img.flip_x()
+	if not $GUI/menus/left/properties/ScrollContainer/VBoxContainer/flip_y.pressed: img.flip_y() #image is default flipped
+	
 	var texture = ImageTexture.new()
 	texture.create_from_image(img)
 	$GUI/menus/right/controls/ScrollContainer/VBoxContainer/render_preview.texture = texture
 	
-	if not $GUI/menus/left/properties/ScrollContainer/VBoxContainer/flip_x.pressed: img.flip_x() #image is default flipped
+	
 	#if $GUI/menus/left/properties/ScrollContainer/VBoxContainer/flip_y.pressed: img.flip_y() #doesn't work for some reason
 	
 	yield(get_tree().create_timer(1),"timeout")
@@ -229,7 +234,7 @@ func _on_btn_save_img_pressed():
 	$GUI/txt/bottom_status.set_text("Saved: [url]"+path+"[/url]")
 	if $GUI/menus/right/controls/ScrollContainer/VBoxContainer/open_after_render.pressed: OS.shell_open(path)
 	OS.move_window_to_foreground()
-	
+	$GUI/menus/left/properties/ScrollContainer/VBoxContainer/pause_render.pressed = false
 	$AnimationPlayer.play("RESET")
 	is_rendering = false
 	pass

@@ -1308,6 +1308,7 @@ rect_min_size = Vector2( 142, 100 )
 texture = ExtResource( 5 )
 expand = true
 stretch_mode = 1
+flip_h = true
 
 [node name="Label" type="Label" parent="GUI/menus/right/controls/ScrollContainer/VBoxContainer/render_preview"]
 margin_left = 9.0
@@ -1361,10 +1362,10 @@ z_index = 5
 
 [node name="plexus_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 374.0
-margin_top = 94.0
-margin_right = 682.0
-margin_bottom = 556.0
+margin_left = 382.0
+margin_top = 102.0
+margin_right = 690.0
+margin_bottom = 564.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1378,10 +1379,10 @@ texture = ExtResource( 4 )
 
 [node name="circle_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 374.0
-margin_top = 94.0
-margin_right = 682.0
-margin_bottom = 556.0
+margin_left = 382.0
+margin_top = 102.0
+margin_right = 690.0
+margin_bottom = 564.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1395,10 +1396,10 @@ texture = ExtResource( 4 )
 
 [node name="modulate" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 378.0
-margin_top = 98.0
-margin_right = 686.0
-margin_bottom = 560.0
+margin_left = 386.0
+margin_top = 106.0
+margin_right = 694.0
+margin_bottom = 568.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1412,10 +1413,10 @@ texture = ExtResource( 4 )
 
 [node name="bgcolor" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 382.0
-margin_top = 102.0
-margin_right = 690.0
-margin_bottom = 564.0
+margin_left = 390.0
+margin_top = 110.0
+margin_right = 698.0
+margin_bottom = 572.0
 color = Color( 0, 0, 0, 1 )
 edit_alpha = false
 __meta__ = {
@@ -1431,10 +1432,10 @@ texture = ExtResource( 4 )
 
 [node name="lightcolor" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 386.0
-margin_top = 106.0
-margin_right = 694.0
-margin_bottom = 568.0
+margin_left = 394.0
+margin_top = 114.0
+margin_right = 702.0
+margin_bottom = 576.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1448,10 +1449,10 @@ texture = ExtResource( 4 )
 
 [node name="gradient_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 390.0
-margin_top = 110.0
-margin_right = 698.0
-margin_bottom = 572.0
+margin_left = 398.0
+margin_top = 118.0
+margin_right = 706.0
+margin_bottom = 580.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
