@@ -75,7 +75,7 @@ func _physics_process(delta):
 		VisualServer.set_default_clear_color($GUI/popups/bgcolor.color)#$canvas/background.color = $GUI/popups/bgcolor.color
 		
 		if not $GUI/menus/left/properties/ScrollContainer/VBoxContainer/light_rainbow.pressed:
-			pass
+			$canvas/background/back_effects/lightAnim.stop()
 		else:
 			$canvas/background/back_effects/lightAnim.play("rainbow")
 			
