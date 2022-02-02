@@ -17,17 +17,28 @@
 
 Available settings:
 - max points [float]
+- speed [float]
 - update interval [float]
 - spawn interval [float]
 - despawn interval [float]
 - move interval [float]
 - line width [float]
+- circle size [float]
+- pause rendering [bool]
+- rotation [float]
 - update [bool]
 - draw lines [bool]
 - draw circles [bool]
-- line color [Color3]
-- circle color [Color3]
-- background color [Color3]
+- line color [Color]
+- circle color [Color]
+- background color [Color]
+- light color [Color]
+- gradient color [Color]
+- light size [float]
+- light position [Vector2]
+- gradient rotation [float]
+- gradient length [float]
+- **And more**
 
 ### Used stuff:
 - https://github.com/godotengine/godot
