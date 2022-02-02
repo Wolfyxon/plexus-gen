@@ -1362,10 +1362,10 @@ z_index = 5
 
 [node name="plexus_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 382.0
-margin_top = 102.0
-margin_right = 690.0
-margin_bottom = 564.0
+margin_left = 390.0
+margin_top = 110.0
+margin_right = 698.0
+margin_bottom = 572.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1379,10 +1379,10 @@ texture = ExtResource( 4 )
 
 [node name="circle_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 382.0
-margin_top = 102.0
-margin_right = 690.0
-margin_bottom = 564.0
+margin_left = 390.0
+margin_top = 110.0
+margin_right = 698.0
+margin_bottom = 572.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1396,10 +1396,10 @@ texture = ExtResource( 4 )
 
 [node name="modulate" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 386.0
-margin_top = 106.0
-margin_right = 694.0
-margin_bottom = 568.0
+margin_left = 394.0
+margin_top = 114.0
+margin_right = 702.0
+margin_bottom = 576.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1413,10 +1413,10 @@ texture = ExtResource( 4 )
 
 [node name="bgcolor" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 390.0
-margin_top = 110.0
-margin_right = 698.0
-margin_bottom = 572.0
+margin_left = 398.0
+margin_top = 118.0
+margin_right = 706.0
+margin_bottom = 580.0
 color = Color( 0, 0, 0, 1 )
 edit_alpha = false
 __meta__ = {
@@ -1432,10 +1432,10 @@ texture = ExtResource( 4 )
 
 [node name="lightcolor" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 394.0
-margin_top = 114.0
-margin_right = 702.0
-margin_bottom = 576.0
+margin_left = 402.0
+margin_top = 122.0
+margin_right = 710.0
+margin_bottom = 584.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1449,10 +1449,10 @@ texture = ExtResource( 4 )
 
 [node name="gradient_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 398.0
-margin_top = 118.0
-margin_right = 706.0
-margin_bottom = 580.0
+margin_left = 406.0
+margin_top = 126.0
+margin_right = 714.0
+margin_bottom = 588.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1487,9 +1487,9 @@ by Wolfyxon
 [color=red][url]https://wolfyxon.github.io[/url][/color]
 
 CONTROLS:
-F1 - hide/show GUI
 F11 - switch fullscreen mode
-SPACE - play/pause plexus
+F1 - hide/show GUI
+F2 - play/pause plexus
 
 If you find any bugs or you want to suggest something visit [url]https://github.com/Wolfyxon/plexus-gen/issues[/url]
 
@@ -1501,9 +1501,9 @@ by Wolfyxon
 https://wolfyxon.github.io
 
 CONTROLS:
-F1 - hide/show GUI
 F11 - switch fullscreen mode
-SPACE - play/pause plexus
+F1 - hide/show GUI
+F2 - play/pause plexus
 
 If you find any bugs or you want to suggest something visit https://github.com/Wolfyxon/plexus-gen/issues
 

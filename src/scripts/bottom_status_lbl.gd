@@ -5,7 +5,7 @@ func _ready():
 
 func set_text(text):
 	self.bbcode_text = text
-	yield(get_tree().create_timer(10),"timeout")
+	yield(get_tree().create_timer(5),"timeout")
 	if self.bbcode_text == text:
 		self.text = ""
 		

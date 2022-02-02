@@ -207,6 +207,10 @@ func _on_RichTextLabel_meta_clicked(meta):
 
 
 func _on_btn_save_img_pressed():
+	if OS.has_feature("HTML5"): 
+		$GUI/txt/bottom_status.set_text("[color=red]This function is not supported in HTML demo[/color]")
+		return
+	
 	is_rendering = true
 	print("Rendering single image...")
 	$AnimationPlayer.play("full_canvas")
@@ -241,6 +245,9 @@ func _on_btn_save_img_pressed():
 
 
 func _on_btn_openpath_pressed():
+	if OS.has_feature("HTML5"): 
+		$GUI/txt/bottom_status.set_text("[color=red]This function is not supported in HTML demo[/color]")
+		return
 	OS.shell_open(OS.get_user_data_dir()+"\\export")
 	pass
 
