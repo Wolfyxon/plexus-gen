@@ -7,6 +7,7 @@ export var maxDots = 70
 var positions = []
 var sizes = []
 var velocities = []
+var alphas = []
 
 # ====
 
@@ -24,7 +25,7 @@ export var circle_color = Color(1,1,1,1)
 
 export var plusSpeed = 0
 export var speed = 1
-export var plusCircleSize = 0
+export var plusCircleSize = 0.2
 
 export var canUpdate = true
 export var can_move = true
@@ -45,10 +46,12 @@ func spawnNew(pos = null):
 	positions.append(pos)
 	sizes.append(size)
 	velocities.append(vel)
+	alphas.append(rand_range(0,1))
 
 func _draw():
 	#Connecting
 	for dot in positions:
+		var dotID = positions.find(dot)
 		for otherDot in positions:
 			if dot.distance_to(otherDot) < 300.0:
 				#var alpha = clamp(dot.distance_to(otherDot)/120, 0, 2)
@@ -64,9 +67,10 @@ func _draw():
 					
 					var tmpColor
 					if rainbow_lines:
-						tmpColor = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1),1)
+						tmpColor = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1),rand_range(1,0.1))
 					else:
 						tmpColor = line_color
+						tmpColor.a = alphas[dotID]
 					draw_line(dot,tmp_otherDot,tmpColor, line_width, true) #draw_line(dot, otherDot, Color(1,1,1, alpha), 1.0, true)
 
 	for dot in positions:
@@ -76,6 +80,7 @@ func _draw():
 			tmpColor = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1),1)
 		else: 
 			tmpColor = circle_color
+			
 			
 		if enable_circles: 
 			draw_circle(positions[dotID], sizes[dotID]*plusCircleSize, tmpColor)
