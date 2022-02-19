@@ -7,7 +7,6 @@ var is_rendering = false
 var ready = false
 
 func _ready():
-	
 	$canvas/background/Plexus.visible = true
 	$AnimationPlayer.play("RESET")
 	ready = true

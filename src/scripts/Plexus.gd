@@ -38,6 +38,7 @@ func _ready():
 func _process(delta):
 	pass
 
+var fadein_thread = Thread.new()
 func spawnNew(pos = null):
 	if pos == null:
 		pos = newRandPos()
@@ -46,12 +47,20 @@ func spawnNew(pos = null):
 	positions.append(pos)
 	sizes.append(size)
 	velocities.append(vel)
-	alphas.append(rand_range(0,1))
-
+	alphas.append(0)
+	var dotID = positions.find_last(pos)
+	var random_max = rand_range(0.1,1)
+	
+	while float(alphas[dotID-1]) < random_max:
+		yield(get_tree().create_timer(0.01),"timeout")
+		if dotID < alphas.size():
+			alphas[dotID-1] += 0.01
+		else:
+			break
 func _draw():
 	#Connecting
 	for dot in positions:
-		var dotID = positions.find(dot)
+		var dotID = positions.find_last(dot)
 		for otherDot in positions:
 			if dot.distance_to(otherDot) < 300.0:
 				#var alpha = clamp(dot.distance_to(otherDot)/120, 0, 2)
@@ -70,11 +79,11 @@ func _draw():
 						tmpColor = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1),rand_range(1,0.1))
 					else:
 						tmpColor = line_color
-						tmpColor.a = alphas[dotID]
+						tmpColor.a = float(alphas[dotID-1])
 					draw_line(dot,tmp_otherDot,tmpColor, line_width, true) #draw_line(dot, otherDot, Color(1,1,1, alpha), 1.0, true)
 
 	for dot in positions:
-		var dotID = positions.find(dot)
+		var dotID = positions.find_last(dot)
 		var tmpColor
 		if rainbow_circles:
 			tmpColor = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1),1)
@@ -135,14 +144,21 @@ func _on_spawn_new_timeout():
 func _on_destroy_timeout():
 	for dot in positions:
 		if dot.x < -200 || dot.y < -200 || dot.x > self.rect_size.x + 200 || dot.y > self.rect_size.y + 200:
-			var dotID = positions.find(dot)
+			var dotID = positions.find_last(dot)
+			if dotID < alphas.size():
+				while alphas[dotID-1] > 0: 
+					yield(get_tree().create_timer(0.01),"timeout")
+					if dotID < alphas.size():
+						alphas[dotID-1] -= 1
+				
+			alphas.remove(dotID-1)
 			positions.remove(dotID)
 			sizes.remove(dotID)
 			velocities.remove(dotID)
 	
 func clearAll():
 		for dot in positions:
-			var dotID = positions.find(dot)
+			var dotID = positions.find_last(dot)
 			positions.remove(dotID)
 			sizes.remove(dotID)
 			velocities.remove(dotID)
