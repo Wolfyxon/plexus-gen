@@ -40,6 +40,7 @@ func _process(delta):
 
 var fadein_thread = Thread.new()
 func spawnNew(pos = null):
+	yield(get_tree().create_timer(rand_range(0,5)),"timeout")
 	if pos == null:
 		pos = newRandPos()
 	var size = rand_range(5, 10)
@@ -148,8 +149,9 @@ func _on_destroy_timeout():
 			if dotID < alphas.size():
 				while alphas[dotID-1] > 0: 
 					yield(get_tree().create_timer(0.01),"timeout")
-					if dotID < alphas.size():
-						alphas[dotID-1] -= 1
+					if dotID < alphas.size(): alphas[dotID-1] -= 1
+					else:
+						break
 				
 			alphas.remove(dotID-1)
 			positions.remove(dotID)
