@@ -1362,10 +1362,10 @@ z_index = 5
 
 [node name="plexus_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 410.0
-margin_top = 130.0
-margin_right = 718.0
-margin_bottom = 592.0
+margin_left = 414.0
+margin_top = 134.0
+margin_right = 722.0
+margin_bottom = 596.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1379,10 +1379,10 @@ texture = ExtResource( 4 )
 
 [node name="circle_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 410.0
-margin_top = 130.0
-margin_right = 718.0
-margin_bottom = 592.0
+margin_left = 414.0
+margin_top = 134.0
+margin_right = 722.0
+margin_bottom = 596.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1396,10 +1396,10 @@ texture = ExtResource( 4 )
 
 [node name="modulate" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 414.0
-margin_top = 134.0
-margin_right = 722.0
-margin_bottom = 596.0
+margin_left = 418.0
+margin_top = 138.0
+margin_right = 726.0
+margin_bottom = 600.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1413,10 +1413,10 @@ texture = ExtResource( 4 )
 
 [node name="bgcolor" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 418.0
-margin_top = 138.0
-margin_right = 726.0
-margin_bottom = 600.0
+margin_left = 422.0
+margin_top = 142.0
+margin_right = 730.0
+margin_bottom = 604.0
 color = Color( 0, 0, 0, 1 )
 edit_alpha = false
 __meta__ = {
@@ -1432,10 +1432,10 @@ texture = ExtResource( 4 )
 
 [node name="lightcolor" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 422.0
-margin_top = 142.0
-margin_right = 730.0
-margin_bottom = 604.0
+margin_left = 426.0
+margin_top = 146.0
+margin_right = 734.0
+margin_bottom = 608.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1449,10 +1449,10 @@ texture = ExtResource( 4 )
 
 [node name="gradient_color" type="ColorPicker" parent="GUI/popups"]
 visible = false
-margin_left = 426.0
-margin_top = 146.0
-margin_right = 734.0
-margin_bottom = 608.0
+margin_left = 430.0
+margin_top = 150.0
+margin_right = 738.0
+margin_bottom = 612.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1471,6 +1471,8 @@ margin_left = 326.0
 margin_top = 105.0
 margin_right = 796.0
 margin_bottom = 467.0
+mouse_filter = 2
+popup_exclusive = true
 window_title = "About"
 __meta__ = {
 "_edit_use_anchors_": false

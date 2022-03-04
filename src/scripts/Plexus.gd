@@ -20,6 +20,8 @@ export var rainbow_circles = true
 
 export var line_width = 1.0 #doesn't work, also when it's bigger than 1 it lags a lot
 
+export var connection_limit = 1
+
 export var line_color = Color(1,1,1,1)
 export var circle_color = Color(1,1,1,1)
 
@@ -40,7 +42,6 @@ func _process(delta):
 
 var fadein_thread = Thread.new()
 func spawnNew(pos = null):
-	yield(get_tree().create_timer(rand_range(0,5)),"timeout")
 	if pos == null:
 		pos = newRandPos()
 	var size = rand_range(5, 10)
@@ -60,29 +61,39 @@ func spawnNew(pos = null):
 			break
 func _draw():
 	#Connecting
+	var final_dots = []
 	for dot in positions:
 		var dotID = positions.find_last(dot)
 		for otherDot in positions:
 			if dot.distance_to(otherDot) < 300.0:
 				#var alpha = clamp(dot.distance_to(otherDot)/120, 0, 2)
 				if enable_lines: 
-					var tmp_otherDot = null
-					if squared:
-						if rand_range(-1,1) > 0:
-							tmp_otherDot = Vector2(dot.x + rand_range(-200,200),dot.y)
-						else:
-							tmp_otherDot = Vector2(dot.x,dot.y + rand_range(-200,200))
-						pass
-					else: tmp_otherDot = otherDot
+					final_dots.append({"dot":dot,"otherDot":otherDot})
 					
-					var tmpColor
-					if rainbow_lines:
-						tmpColor = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1),rand_range(1,0.1))
-					else:
-						tmpColor = line_color
-						tmpColor.a = float(alphas[dotID-1])
-					draw_line(dot,tmp_otherDot,tmpColor, line_width, true) #draw_line(dot, otherDot, Color(1,1,1, alpha), 1.0, true)
-
+	for i in final_dots:
+		var dot = i["dot"]
+		var otherDot = i["otherDot"]
+		var dotID = positions.find_last(dot)
+		
+		var tmp_otherDot = null
+		
+		if squared:
+			if rand_range(-1,1) > 0:
+				tmp_otherDot = Vector2(dot.x + rand_range(-200,200),dot.y)
+			else:
+				tmp_otherDot = Vector2(dot.x,dot.y + rand_range(-200,200))
+			pass
+		else: tmp_otherDot = otherDot
+		
+		var tmpColor
+		if rainbow_lines:
+			tmpColor = Color(rand_range(0,1),rand_range(0,1),rand_range(0,1),rand_range(1,0.1))
+		else:
+			tmpColor = line_color
+			tmpColor.a = float(alphas[dotID-1])
+		draw_line(dot,tmp_otherDot,tmpColor, line_width, true)
+		
+	#Circles
 	for dot in positions:
 		var dotID = positions.find_last(dot)
 		var tmpColor
@@ -149,9 +160,8 @@ func _on_destroy_timeout():
 			if dotID < alphas.size():
 				while alphas[dotID-1] > 0: 
 					yield(get_tree().create_timer(0.01),"timeout")
-					if dotID < alphas.size(): alphas[dotID-1] -= 1
-					else:
-						break
+					if dotID < alphas.size():
+						alphas[dotID-1] -= 1
 				
 			alphas.remove(dotID-1)
 			positions.remove(dotID)
